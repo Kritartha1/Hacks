@@ -30,11 +30,17 @@ MAX_RESOURCE_WAIT       = 15   # seconds to stay on a resource before clicking N
 
 # --- CSS Selectors (tried in order, first match wins) ---
 NEXT_BTN_SELECTORS = [
+    "#go-to-next-item",                              # ✅ Your exact button — prioritized
     "button[data-purpose='next-and-complete-button']",
     "button[data-purpose='go-to-next-lecture']",
     "[aria-label='Go to next lecture']",
     "[aria-label='Next lecture']",
-    "button.curriculum-item-link--next-item",
+    "button[data-purpose='next-section-button']",
+    ".curriculum-item-link--next-item button",
+    "a[data-purpose='next-and-complete-button']",
+    "button.next-button",
+    "[class*='next'][class*='button']",
+    "[class*='nextButton']",
 ]
 MARK_COMPLETE_SELECTORS = [
     "button[data-purpose='mark-complete-button']",
