@@ -156,14 +156,30 @@ def get_remaining_seconds(driver):
         return 0
 
 def force_play(driver):
+    """Start video and set to 2x speed."""
     try:
-        driver.execute_script("document.querySelector('video').play();")
+        driver.execute_script("""
+            const v = document.querySelector('video');
+            if (v) {
+                v.play();
+                v.playbackRate = 2.0;
+            }
+        """)
     except:
         pass
+    
+    # Also click the play button as fallback
     try:
         btn = driver.find_element(By.CSS_SELECTOR,
             "button[data-purpose='play-button'], .vjs-play-control, button.play-btn")
         btn.click()
+        # Set speed again after click (player may reset it)
+        driver.execute_script("""
+            setTimeout(() => {
+                const v = document.querySelector('video');
+                if (v) v.playbackRate = 2.0;
+            }, 1000);
+        """)
     except:
         pass
 
